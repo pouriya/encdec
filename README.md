@@ -3,14 +3,13 @@ A terminal encryption utility that supports multipart and compression.
 
 ## Installation
 Download the latest version:
-* **GNU/Linux**:
+* **GNU/Linux** (Built on Ubuntu):
     * Musl (Statically linked):       [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-unknown-linux-musl-ubuntu-22.04)
     * GNU (Dynamic linking to glibc): [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-unknown-linux-gnu-ubuntu-22.04)
 * **macOS**:
     * v11: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-11)
     * v12: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-12)
     * v13: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-13)
-    * latest (v14): [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-14)
 * **Windows**:
     * v2019:
         * MSVC: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-msvc-windows-2019.exe)

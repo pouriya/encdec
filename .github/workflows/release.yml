@@ -16,9 +16,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-14
-            target: x86_64-apple-darwin
-            name: macOS 14 (x86-64)
+          # - os: macos-14
+          #   target: x86_64-apple-darwin
+          #   name: macOS 14 (x86-64)
           - os: macos-11
             target: x86_64-apple-darwin
             name: macOS 11 (x86-64)
@@ -67,6 +67,7 @@ jobs:
         run: |
           brew install openssl@1.1
           brew install make
+          rustup target add ${{ matrix.target }}
 
       - name: Installing needed Linux dependencies
         if: contains(matrix.os, 'ubuntu-')
