@@ -19,8 +19,17 @@ Download the latest version:
       * GNU:  [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-gnu-windows-2022.exe)
 
 ## Usage
+Rename downloaded asset to `encdec` (`encdec.exe` on windows)
 ```shell
-encdec --help
+mv <DOWNLOADED_FILE> encdec
+```
+Make it executable
+```shell
+chmod a+x encdec
+```
+Test
+```shell
+./encdec --help
 ```
 ```text
 A terminal encryption utility that supports multipart and compression.
@@ -41,7 +50,7 @@ Options:
 ### Generate key pairs
 #### Usage
 ```shell
-encdec gen --help
+./encdec gen --help
 ```
 ```text
 Generates private & public PEM files
@@ -60,7 +69,7 @@ Options:
 ```
 #### Example
 ```shell
-encdec gen -n test
+./encdec gen -n test
 ```
 ```text
 Attempt to generate RSA private key with bit size 2048.
@@ -96,7 +105,7 @@ h65i9s67Dn0ZQNiROIYVcYSYPSxHoNhng9g60w5oesujZvGFvJGIwI5MfVGgnCes
 ### Encryption
 #### Usage
 ```shell
-encdec enc --help
+./encdec enc --help
 ```
 ```text
 Encryption
@@ -127,7 +136,7 @@ vitae tristique consectetur, neque lectus pulvinar dui, sed feugiat purus diam i
 inceptos himenaeos. Maecenas feugiat velit in ex ultrices scelerisque id id neque.
 ```
 ```shell
-encdec enc -p test.PUB.pem -i secret.txt -o encrypted
+./encdec enc -p test.PUB.pem -i secret.txt -o encrypted
 ```
 ```text
 Attempt to check for PKCS#1 method
@@ -155,7 +164,7 @@ Archive:  encrypted.zip
 ### Decryption
 #### Usage
 ```shell
-encdec dec --help
+./encdec dec --help
 ```
 ```text
 Decryption
@@ -170,7 +179,7 @@ Options:
 ```
 #### Example
 ```shell
-encdec dec -p test.PRIV.pem -i encrypted.zip -o decrypted-secret.txt
+./encdec dec -p test.PRIV.pem -i encrypted.zip -o decrypted-secret.txt
 ```
 ```text
 Attempt to check for PKCS#1 method
