@@ -4,20 +4,20 @@ A terminal encryption utility that supports multipart and compression.
 ## Installation
 Download the latest version:
 * **GNU/Linux**:
-    * Musl (Statically linked):       [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-unknown-linux-musl-ubuntu-latest)
-    * GNU (Dynamic linking to glibc): [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-unknown-linux-gnu-ubuntu-latest)
+    * Musl (Statically linked):       [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-unknown-linux-musl-ubuntu-22.04)
+    * GNU (Dynamic linking to glibc): [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-unknown-linux-gnu-ubuntu-22.04)
 * **macOS**:
     * v11: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-11)
     * v12: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-12)
     * v13: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-13)
-    * latest (v14): [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-latest)
+    * latest (v14): [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-apple-darwin-macos-14)
 * **Windows**:
     * v2019:
         * MSVC: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-msvc-windows-2019.exe)
         * GNU:  [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-gnu-windows-2019.exe)
     * latest (v2022):
-      * MSVC: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-msvc-windows-latest.exe)
-      * GNU:  [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-gnu-windows-latest.exe)
+      * MSVC: [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-msvc-windows-2022.exe)
+      * GNU:  [**download**](https://github.com/pouriya/encdec/releases/download/latest/encdec-latest-x86_64-pc-windows-gnu-windows-2022.exe)
 
 ## Usage
 ```shell

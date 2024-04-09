@@ -16,9 +16,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - os: macos-latest
+          - os: macos-14
             target: x86_64-apple-darwin
-            name: macOS latest (x86-64)
+            name: macOS 14 (x86-64)
           - os: macos-11
             target: x86_64-apple-darwin
             name: macOS 11 (x86-64)
@@ -29,12 +29,12 @@ jobs:
             target: x86_64-apple-darwin
             name: macOS 13 (x86-64)
 
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
-            name: Ubuntu latest GNU (x86-64)
-          - os: ubuntu-latest
+            name: Ubuntu 22.04 GNU (x86-64)
+          - os: ubuntu-22.04
             target: x86_64-unknown-linux-musl
-            name: Ubuntu latest Musl (x86-64)
+            name: Ubuntu 22.04 Musl (x86-64)
           - os: ubuntu-20.04
             target: x86_64-unknown-linux-gnu
             name: Ubuntu 20.04 GNU (x86-64)
@@ -42,12 +42,12 @@ jobs:
             target: x86_64-unknown-linux-musl
             name: Ubuntu 20.04 Musl (x86-64)
 
-          - os: windows-latest
+          - os: windows-2021
             target: x86_64-pc-windows-gnu
-            name: Windows latest GNU (x86-64)
-          - os: windows-latest
+            name: Windows 2021 GNU (x86-64)
+          - os: windows-2021
             target: x86_64-pc-windows-msvc
-            name: Windows latest MSVC (x86-64)
+            name: Windows 2021 MSVC (x86-64)
           - os: windows-2019
             target: x86_64-pc-windows-gnu
             name: Windows 2019 GNU (x86-64)
@@ -99,13 +99,13 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.ref_name }}
-          files: build/envenc-*
-
+          files: build/encdec-*
+            
       - name: Replace `${{ github.ref_name }}` to `latest` in release files
         shell: bash
         run: |
           cd build
-          for filename in envenc-*; do
+          for filename in encdec-*; do
             newfilename=`echo $filename | sed 's/${{ github.ref_name }}/latest/g'`
             mv $filename $newfilename
           done
@@ -117,7 +117,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: latest
-          files: build/envenc-*
+          files: build/encdec-*
 
   remove-latest:
     name: Remove previous latest tag
