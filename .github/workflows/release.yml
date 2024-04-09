@@ -1,22 +1,16 @@
-name: Check
+ame: Release
 
 on:
   push:
-    tags-ignore:
-      - "*.*.*"
-    paths-ignore:
-      - "**.md"
-    branches-ignore:
-      - "documentation"
-  pull_request:
-    branches:
-      - "master"
-    paths-ignore:
-      - "**.md"
+    tags:
+      - "*"
+  # Run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 jobs:
-  build:
+  publish:
     name: ${{ matrix.name }}
+    needs: remove-latest
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -67,56 +61,72 @@ jobs:
         with:
           toolchain: stable
           override: true
-          components: rustfmt, clippy
 
-      - name: Installing macOS dependencies
+      - name: Installing needed macOS dependencies
         if: contains(matrix.os, 'macos-')
         run: |
           brew install openssl@1.1
           brew install make
-      - name: Installing Windows dependencies
+
+      - name: Installing needed Linux dependencies
+        if: contains(matrix.os, 'ubuntu-')
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y -qq pkg-config libssl-dev liblzma-dev dpkg dpkg-dev
+          cargo install cargo-deb
+
+      - name: Installing needed Windows dependencies
         if: contains(matrix.os, 'windows-')
         run: |
           rustup target add ${{ matrix.target }}
-      - name: Installing Linux dependencies for `musl`
+
+      - name: Installing needed Linux dependencies for `musl`
         if: contains(matrix.os, 'ubuntu-') && contains(matrix.target, '-musl')
         run: |
           sudo apt-get update
           sudo apt-get install -y -qq musl-dev musl-tools
           rustup target add ${{ matrix.target }}
+
       - name: Checking out sources
         uses: actions/checkout@v1
 
-      - name: Lint
-        run: make lint VERSION=test TARGET=${{ matrix.target }}
+      - name: Running `make release`
+        run: make release VERSION=${{ github.ref_name }} TARGET=${{ matrix.target }} RELEASE_FILENAME_POSTFIX=-${{ matrix.os }}
 
-      - name: Build
-        run: make release VERSION=test TARGET=${{ matrix.target }} RELEASE_FILENAME_POSTFIX=-${{ matrix.os }}
-
-      - name: Test
-        run: make test VERSION=test TARGET=${{ matrix.target }}
-
-      - name: Archive Linux artifacts
-        if: contains(matrix.os, 'ubuntu-')
-        uses: actions/upload-artifact@v3
+      - name: Releasing assets for `${{ github.ref_name }}`
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: linux-releases
-          path: |
-            build/encdec-*
-          retention-days: 10
+          tag_name: ${{ github.ref_name }}
+          files: build/envenc-*
 
-      - name: Archive Windows artifacts
-        if: contains(matrix.os, 'windows-')
-        uses: actions/upload-artifact@v3
-        with:
-          name: windows-releases
-          path: build/encdec-*
-          retention-days: 10
+      - name: Replace `${{ github.ref_name }}` to `latest` in release files
+        shell: bash
+        run: |
+          cd build
+          for filename in envenc-*; do
+            newfilename=`echo $filename | sed 's/${{ github.ref_name }}/latest/g'`
+            mv $filename $newfilename
+          done
+          cd -
 
-      - name: Archive macOS artifacts
-        if: contains(matrix.os, 'macos-')
-        uses: actions/upload-artifact@v3
+      - name: Releasing assets for latest
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: macos-releases
-          path: build/encdec-*
-          retention-days: 10
+          tag_name: latest
+          files: build/envenc-*
+
+  remove-latest:
+    name: Remove previous latest tag
+    runs-on: ubuntu-latest
+    steps:
+      - uses: dev-drprasad/delete-tag-and-release@v0.2.0
+        with:
+          delete_release: true
+          tag_name: latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
