@@ -28,6 +28,12 @@ jobs:
           - os: macos-11
             target: x86_64-apple-darwin
             name: macOS 11 (x86-64)
+          - os: macos-12
+            target: x86_64-apple-darwin
+            name: macOS 12 (x86-64)
+          - os: macos-13
+            target: x86_64-apple-darwin
+            name: macOS 13 (x86-64)
 
           - os: ubuntu-latest
             target: x86_64-unknown-linux-gnu
@@ -68,12 +74,6 @@ jobs:
         run: |
           brew install openssl@1.1
           brew install make
-      - name: Installing Linux dependencies
-        if: contains(matrix.os, 'ubuntu-')
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y -qq pkg-config libssl-dev
-          cargo install cargo-deb
       - name: Installing Windows dependencies
         if: contains(matrix.os, 'windows-')
         run: |
@@ -96,16 +96,11 @@ jobs:
       - name: Test
         run: make test VERSION=test TARGET=${{ matrix.target }}
 
-      - name: Build Debian package
-        if: contains(matrix.os, 'ubuntu-')
-        shell: bash
-        run: make deb VERSION=test TARGET=${{ matrix.target }} RELEASE_FILENAME_POSTFIX=-${{ matrix.os }}
-
       - name: Rename Windows executable
         if: contains(matrix.os, 'windows-')
         shell: bash
         run: |
-          NAME=`ls build/sssh-*` 
+          NAME=`ls build/encdec-*` 
           mv $NAME `echo $NAME | sed 's/.exe//'`.exe
       - name: Archive Linux artifacts
         if: contains(matrix.os, 'ubuntu-')
@@ -113,16 +108,8 @@ jobs:
         with:
           name: linux-releases
           path: |
-            build/sssh-*
-            !build/sssh-*.deb
-          retention-days: 10
-
-      - name: Archive Debian package artifacts
-        if: contains(matrix.os, 'ubuntu-')
-        uses: actions/upload-artifact@v3
-        with:
-          name: linux-releases
-          path: build/sssh-*.deb
+            build/encdec-*
+            !build/encdec-*.deb
           retention-days: 10
 
       - name: Archive Windows artifacts
@@ -130,7 +117,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: windows-releases
-          path: build/sssh-*
+          path: build/encdec-*
           retention-days: 10
 
       - name: Archive macOS artifacts
@@ -138,5 +125,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: macos-releases
-          path: build/sssh-*
+          path: build/encdec-*
           retention-days: 10
