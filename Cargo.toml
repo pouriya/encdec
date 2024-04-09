@@ -13,7 +13,6 @@ license-file = "LICENSE"
 rsa = {version = "0.9.6", features = ["sha2"]}
 clap = {version = "4.5.4", features = ["derive"]}
 anyhow = "1.0.66"
-thiserror = "1.0.49"
 rand = "0.8.5"
 zip = "0.6"
 
